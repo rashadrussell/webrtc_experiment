@@ -94,19 +94,7 @@
 
 		pc.onicecandidate = function(evt) {
 			if(evt.candidate == null) return; 
-			pc.onicecandidate = null;
-			console.log("Ice Candidate");
-			//console.log(JSON.stringify(evt.candidate));
-			//console.dir(JSON.parse(candidate));
-
-			/*
-			socket.on('message', function(message) {
-				if(message.type == "iceCandidate") {
-					console.log("Get Ice Candidate");
-					pc.addIceCandidate(new rtcIceCandidate(JSON.parse(message.message)) );
-				}
-			});
-			*/
+			pc.onicecandidate = null;			
 
 			console.log("Send Ice Candidate");
 			sendMessage("iceCandidate", JSON.stringify(evt.candidate));

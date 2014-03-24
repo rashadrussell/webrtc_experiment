@@ -8,4 +8,4 @@ Trying to create a simple 1-to-1 video chat with as minimal code as possible.
 Issues
 ======
 
-For some reason, when a new client reaches the server, the other clients aren't notified.
+For some reason, after the initial client reaches the server, when other clients join, there messages don't reach each other when socket.io's emit() method is called. The clients only receieve their own emitted messages.
