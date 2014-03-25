@@ -9,7 +9,7 @@
 	videoConstraints = {
 		'mandatory': {
 			'OfferToReceiveVideo': true,
-			'OfferToReceiveAudio': false
+			'OfferToReceiveAudio': true
 		} 
 		
 	},
@@ -53,21 +53,23 @@
 			navigator.msGetUserMedia
 		);
 
+	var localStream;
 	navigator.getMedia(
-		{video: true, audio: false},
+		{video: true, audio: true},
 		function(stream) {
 			var video = document.getElementById("localView");
 			video.src = window.URL.createObjectURL(stream);
 			console.log("Add Stream");
 			sendMessage('streamAdd', {streamAdded: 'stream-added'});
-			
+			localStream = stream;
 			createPeerConnection();
-			pc.addStream(stream);
+			pc.addStream(localStream);
 
 			if(isInitiator)
 			{
 				callPeer();
 			}
+			
 			
 		},
 		function(err) {
@@ -92,6 +94,8 @@
 		pc = new rtcPeerConnection(servers, options);
 		console.dir(pc);
 
+		pc.addStream(localStream);
+
 		pc.onicecandidate = function(evt) {
 			if(evt.candidate == null) return; 
 			pc.onicecandidate = null;			
@@ -101,7 +105,7 @@
 		};
 
 		pc.onaddstream = function(evt) {
-			document.body.append("<video id='remoteVideo' autoplay></video>");
+			document.body.innerHTML += "<video id='remoteVideo' autoplay></video>";
 			var remoteVid = document.getElementById("remoteVideo");
 			remoteVid.src = window.URL.createObjectURL(evt.stream);
 		};

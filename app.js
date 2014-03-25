@@ -30,7 +30,7 @@
       if(message.type == 'streamAdd') {
         console.log('Got message: ' + message);
       }
-      socket.emit('message' ,message);
+      socket.broadcast.emit('message' ,message);
 
     });
 
