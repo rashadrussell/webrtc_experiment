@@ -25,8 +25,8 @@
 	rtcSessionDescription = window.RTCSessionDescription ||
 							window.webkitRTCSessionDescription ||
 							window.mozRTCSessionDescription,
-
-	socket = io.connect("http://localhost"),
+	// Change host
+	socket = io.connect("http://localhost:3000/"),
 
 	options = {
 	    optional: [
