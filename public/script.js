@@ -101,10 +101,14 @@
 			pc.onicecandidate = null;			
 
 			console.log("Send Ice Candidate");
+			console.log(evt.candidate);
 			sendMessage("iceCandidate", JSON.stringify(evt.candidate));
 		};
 
 		pc.onaddstream = function(evt) {
+			console.log("A Remote Stream Was Added");
+			console.log(evt);
+			console.log(evt.stream);
 			document.body.innerHTML += "<video id='remoteVideo' autoplay></video>";
 			var remoteVid = document.getElementById("remoteVideo");
 			remoteVid.src = window.URL.createObjectURL(evt.stream);
@@ -175,9 +179,11 @@
 
 
 		} else if(message.type == 'answer') {
+			console.log("Receiving Answer");
 			pc.setRemoteDescription( new rtcSessionDescription(JSON.parse(message.message)));
 		} else if(message.type == 'iceCandidate') {
 			console.log("Get Ice Candidate");
+			console.log(message);
 			pc.addIceCandidate(new rtcIceCandidate(JSON.parse(message.message)) );
 		}
 
